@@ -1,0 +1,15 @@
+{
+  "name": "discord-command-parser",
+  "version": "1.0.3",
+  "description": "Offers basic parsing for messages received with discord.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "discord.js"
+  ],
+  "author": "Xzlash",
+  "license": "MIT"
+}
