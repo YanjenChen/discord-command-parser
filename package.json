@@ -11,5 +11,13 @@
     "discord.js"
   ],
   "author": "Xzlash",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://xzlash@github.com/Xzlash/discord-command-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Xzlash/discord-command-parser/issues"
+  },
+  "homepage": "https://github.com/Xzlash/discord-command-parser#readme"
 }
