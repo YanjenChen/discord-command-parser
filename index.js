@@ -4,15 +4,30 @@ const RE_ARG_MATCHER = /"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|\S+/g
 // trims " and " from the start and end of a string
 const RE_QUOTE_STRIP = /^"+|"+$|^'+|'+$/g
 
-// basically String.prototype.trimEnd() but not deprecated.
-const RE_TRIM_TRAILING_SPACES = /[\s\uFEFF\xA0]+$/g
-
 // test if string starts with whitespace.
-const RE_STARTS_WITH_WHITESPACE = /^\s/  
+const RE_STARTS_WITH_WHITESPACE = /^\s/
 
 // made by Xzlash - <xzl4sh gmail com>
 
-function parse (prefix, {author, client, content}) {
+const codes = Object.freeze({
+  OK: 0,
+  BOT_USER: 1,
+  SELF_MESSAGE: 2,
+  NO_PREFIX_MATCH: 3,
+  NO_BODY: 4,
+  WHITESPACE_AFTER_PREFIX: 5,
+  UNKNOWN_ERROR: 6,
+  
+  0: 'OK',
+  1: 'BOT_USER',
+  2: 'SELF_MESSAGE',
+  3: 'NO_PREFIX_MATCH',
+  4: 'NO_BODY',
+  5: 'WHITESPACE_AFTER_PREFIX',
+  6: 'UNKNOWN_ERROR'
+})
+
+function parse (prefix, {author, client, content}, {allowSelf = false} = {}) {
   const result = {
     //success: null,
     //prefix: null,
@@ -25,21 +40,21 @@ function parse (prefix, {author, client, content}) {
     if (author.bot) {
       result.success = false
       result.error = 'bot user'
-      result.code = 'BOT_USER'
+      result.code = codes.BOT_USER
       return result
     }
     
-    if (author.id === client.user.id) {
+    if ((!allowSelf) && author.id === client.user.id) {
       result.success = false
       result.error = 'message sent from self'
-      result.code = 'SELF_MESSAGE'
+      result.code = codes.SELF_MESSAGE
       return result
     }
     
     if (!content.startsWith(prefix)) {
       result.success = false
       result.error = 'content does not begin with prefix'
-      result.code = 'NO_PREFIX_MATCH'
+      result.code = codes.NO_PREFIX_MATCH
       return result
     }
 
@@ -49,14 +64,14 @@ function parse (prefix, {author, client, content}) {
     if (!remaining.length) {
       result.success = false
       result.error = 'no body to message, only a prefix'
-      result.code = 'NO_BODY'
+      result.code = codes.NO_BODY
       return result
     }
     
     if (RE_STARTS_WITH_WHITESPACE.test(remaining)) {
       result.success = false
       result.error = 'whitespace after prefix'
-      result.code = 'WHITESPACE_AFTER_PREFIX'
+      result.code = codes.WHITESPACE_AFTER_PREFIX
       return result
     }
     
@@ -72,15 +87,12 @@ function parse (prefix, {author, client, content}) {
   } catch (e) {
     result.success = false
     result.error = e.stack
-    result.code = 'UNKNOWN_ERROR'
+    result.code = codes.UNKNOWN_ERROR
     return result
   }
 }
 
 function getArgs (str) {
-  // trim whitespace off the end
-  str = str.replace(RE_TRIM_TRAILING_SPACES, '')
-  
   // get the arguments using the magic regex
   let splitted = str.match(RE_ARG_MATCHER)
   
@@ -89,3 +101,4 @@ function getArgs (str) {
 }
 
 module.exports = parse
+module.exports.codes = codes
