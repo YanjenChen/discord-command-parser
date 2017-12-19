@@ -57,6 +57,7 @@ function parse (prefix, {author, client, content}) {
       result.success = false
       result.error = 'whitespace after prefix'
       result.code = 'WHITESPACE_AFTER_PREFIX'
+      return result
     }
     
     let args = getArgs(remaining)

@@ -1,6 +1,6 @@
 {
   "name": "discord-command-parser",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Offers basic parsing for messages received with discord.js",
   "main": "index.js",
   "scripts": {
