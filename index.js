@@ -1,8 +1,8 @@
 // separates arguments with full "quote and \"escape\" support."
-const RE_ARG_MATCHER = /"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|\S+/g
+const RE_ARG_MATCHER = /"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|```((.|\s)*?)```|\S+/g
 
 // trims " and " from the start and end of a string
-const RE_QUOTE_STRIP = /^"+|"+$|^'+|'+$/g
+const RE_QUOTE_STRIP = /^"|"$|^'|'$|^```|```$/g
 
 // test if string starts with whitespace.
 const RE_STARTS_WITH_WHITESPACE = /^\s/

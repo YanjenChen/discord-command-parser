@@ -59,6 +59,6 @@ The parser returns an object, with the following values:
    - `code` = `OK`
    - `prefix` - The prefix you specified
    - `command` - The first word after the prefix
-   - `arguments` - An array of arguments passed to the command, these are somewhat glitchy yet, but they do handle "multi-word arguments and \\"escaping\\"" as well as single word arguments.
+   - `arguments` - An array of arguments passed to the command, these are somewhat glitchy yet, but they do handle "multi-word arguments and \\"escaping\\"" as well as single word arguments and code blocks!
  
  Feel free to join my Discord server if you want lol, it's https://discord.gg/GJSQqDw
