@@ -42,7 +42,6 @@ CommandParser(<prefix>, <message> [, options])
  - `options` is an optional argument, which takes an object with the following values:
    - `allowSelf` (default: `false`) - if `true`, the parser will not return an error if the message is from the client instance that received it (useful for selfbots).
 
-###### return
 The parser returns an object, with the following values:
  - If there was an error:
    - `success` = `false`
@@ -59,6 +58,7 @@ The parser returns an object, with the following values:
    - `code` = `OK`
    - `prefix` - The prefix you specified
    - `command` - The first word after the prefix
-   - `arguments` - An array of arguments passed to the command, these are somewhat glitchy yet, but they do handle "multi-word arguments and \\"escaping\\"" as well as single word arguments and code blocks!
- 
- Feel free to join my Discord server if you want lol, it's https://discord.gg/GJSQqDw
+   - `arguments` - An array of arguments passed to the command, these are somewhat glitchy yet, but they do handle "multi-word arguments and \\"escaping\\"" as well as single word arguments and even code blocks!
+   - `body` - the body of the message, minus the prefix and command.
+
+ Feel free to join my Discord server if you want, it's https://discord.gg/GJSQqDw

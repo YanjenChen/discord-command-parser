@@ -1,6 +1,9 @@
 // separates arguments with full "quote and \"escape\" support."
 const RE_ARG_MATCHER = /"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|```((.|\s)*?)```|\S+/g
 
+// similar, but only matches the command name
+const RE_CMD_MATCHER = /^"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|\S+/
+
 // trims " and " from the start and end of a string
 const RE_QUOTE_STRIP = /^"|"$|^'|'$|^```|```$/g
 
@@ -34,7 +37,8 @@ function parse (prefix, {author, client, content}, {allowSelf = false} = {}) {
     //command: null,
     //arguments: null,
     //error: null,
-    //code: null
+    //code: null,
+    //body: null
   }
   try {
     if (author.bot) {
@@ -82,6 +86,7 @@ function parse (prefix, {author, client, content}, {allowSelf = false} = {}) {
     result.prefix = prefix
     result.command = args.shift() // the command is the first item in the array ;)
     result.arguments = args
+    result.body = getBody(remaining)
     
     return result
   } catch (e) {
@@ -90,6 +95,11 @@ function parse (prefix, {author, client, content}, {allowSelf = false} = {}) {
     result.code = codes.UNKNOWN_ERROR
     return result
   }
+}
+
+function getBody (str) {
+  // remove the command name
+  return str.replace(RE_CMD_MATCHER, '')
 }
 
 function getArgs (str) {
