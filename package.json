@@ -1,6 +1,6 @@
 {
   "name": "discord-command-parser",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Offers basic parsing for messages received with discord.js",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://xzlash@github.com/Xzlash/discord-command-parser.git"
+    "url": "git+https://github.com/Xzlash/discord-command-parser.git"
   },
   "bugs": {
     "url": "https://github.com/Xzlash/discord-command-parser/issues"
