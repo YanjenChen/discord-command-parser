@@ -49,6 +49,7 @@ function parse (prefix, message, options = {}) {
     //code
     //body
   };
+  result.message = message;
   try {
     if ((!options.allowBots) && message.author.bot) {
       result.success = false;
