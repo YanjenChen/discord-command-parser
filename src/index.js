@@ -50,7 +50,7 @@ function parse (prefix, message, options = {}) {
       return result;
     }
     
-    if (RE_STARTS_WITH_WHITESPACE.test(remaining)) {
+    if (regexps.RE_STARTS_WITH_WHITESPACE.test(remaining)) {
       result.success = false;
       result.error = 'whitespace after prefix';
       result.code = ResultCode.WHITESPACE_AFTER_PREFIX;
@@ -77,15 +77,15 @@ function parse (prefix, message, options = {}) {
 
 function getBody (str) {
   // remove the command name
-  return str.replace(RE_CMD_MATCHER, '').trim();
+  return str.replace(regexps.RE_CMD_MATCHER, '').trim();
 }
 
 function getArgs (str) {
   // get the arguments using the magic regex
-  let splitted = str.match(RE_ARG_MATCHER);
+  let splitted = str.match(regexps.RE_ARG_MATCHER);
   
   // map it to remove the quotes (if any)
-  return splitted.map(v => v.replace(RE_QUOTE_STRIP, ''));
+  return splitted.map(v => v.replace(regexps.RE_QUOTE_STRIP, ''));
 }
 
 module.exports.ParserOptions = class ParserOptions {};
