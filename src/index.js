@@ -53,6 +53,8 @@ function parse (message, prefix, options = {}) {
     
     let args = getArgs(remaining);
     
+    let result = new ParsedMessage();
+    
     result.success = true
     result.code = 'OK';
     result.prefix = prefix;

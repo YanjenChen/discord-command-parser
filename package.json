@@ -1,6 +1,6 @@
 {
   "name": "discord-command-parser",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Offers basic parsing for messages received with discord.js",
   "main": "src/index.js",
   "scripts": {
@@ -23,5 +23,6 @@
   "dependencies": {
     "discord.js-typings": "github:discordjs/discord.js-typings"
   },
-  "types": "./typing.d.ts"
+  "types": "./typing.d.ts",
+  "devDependencies": {}
 }
