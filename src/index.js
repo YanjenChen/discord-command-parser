@@ -1,11 +1,11 @@
 // https://npmjs.com/package/discord-command-parser
-// https://github.com/xzlash/discord-command-parser
+// https://github.com/Shinobu1337/discord-command-parser
 // Licensed under the MIT license. See "LICENSE" in the root of this project.
 
 const regexps = require('./regexps');
 const ParsedMessage = require('./ParsedMessage');
 
-const ResultCode = {
+const ResultCode = Object.freeze({
   OK: 0,
   BOT_USER: 1,
   SELF_MESSAGE: 2,
@@ -13,49 +13,43 @@ const ResultCode = {
   NO_BODY: 4,
   WHITESPACE_AFTER_PREFIX: 5,
   UNKNOWN_ERROR: 6
-}
+});
 
-function parse (prefix, message, options = {}) {
-  const result = new ParsedMessage();
-  result.message = message;
+function parse (message, prefix, options = {}) {
+  function fail (error, code) {
+    const result = new ParsedMessage();
+    result.success = false;
+    result.message = message;
+    result.prefix = prefix;
+    result.error = error;
+    result.code = code;
+
+    return result;
+  }
+
   try {
-    if ((!options.allowBots) && message.author.bot) {
-      result.success = false;
-      result.error = 'bot user';
-      result.code = ResultCode.BOT_USER;
-      return result;
-    }
+    // check for bot user
+    if ((!options.allowBots) && message.author.bot)
+      return fail('bot user', ResultCode.BOT_USER);
     
-    if ((!options.allowSelf) && message.author.id === message.client.user.id) {
-      result.success = false;
-      result.error = 'message sent from self';
-      result.code = ResultCode.SELF_MESSAGE;
-      return result;
-    }
+    // check for self message
+    if ((!options.allowSelf) && message.author.id === message.client.user.id) 
+      return fail('message sent from self', ResultCode.SELF_MESSAGE);
     
-    if (!message.content.startsWith(prefix)) {
-      result.success = false;
-      result.error = 'content does not begin with prefix';
-      result.code = ResultCode.NO_PREFIX_MATCH;
-      return result;
-    }
-
-    // now we parse the message
+    // check for prefix match
+    if (!message.content.startsWith(prefix))
+      return fail('content does not begin with prefix', ResultCode.NO_PREFIX_MATCH);
     
+    // remove the prefix from the beginning
     let remaining = message.content.slice(prefix.length);
-    if (!remaining.length) {
-      result.success = false;
-      result.error = 'no body to message, only a prefix';
-      result.code = ResultCode.NO_BODY;
-      return result;
-    }
+
+    // make sure that there's more to the message
+    if (!remaining.length)
+      return fail('no body to message, only a prefix', ResultCode.NO_BODY);
     
-    if (regexps.RE_STARTS_WITH_WHITESPACE.test(remaining)) {
-      result.success = false;
-      result.error = 'whitespace after prefix';
-      result.code = ResultCode.WHITESPACE_AFTER_PREFIX;
-      return result;
-    }
+    // make sure that the first character after the prefix is a non-whitespace character
+    if (regexps.RE_STARTS_WITH_WHITESPACE.test(remaining))
+      return fail('whitespace after prefix', ResultCode.WHITESPACE_AFTER_PREFIX);
     
     let args = getArgs(remaining);
     
@@ -65,13 +59,11 @@ function parse (prefix, message, options = {}) {
     result.command = args.shift(); // the command is the first item in the array ^_^
     result.arguments = args;
     result.body = getBody(remaining);
+    result.message = message;
     
     return result;
   } catch (e) {
-    result.success = false;
-    result.error = e.stack;
-    result.code = ResultCode.UNKNOWN_ERROR;
-    return result;
+    return fail(e.stack, ResultCode.UNKNOWN_ERROR);
   }
 }
 
@@ -88,7 +80,9 @@ function getArgs (str) {
   return splitted.map(v => v.replace(regexps.RE_QUOTE_STRIP, ''));
 }
 
-module.exports.ParserOptions = class ParserOptions {};
+class ParserOptions {}; // for typings
+
+module.exports.ParserOptions = ParserOptions;
 module.exports.parse = parse;
 module.exports.ResultCode = ResultCode;
 module.exports.ParsedMessage = ParsedMessage;

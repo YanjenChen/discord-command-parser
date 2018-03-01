@@ -1,6 +1,6 @@
 {
   "name": "discord-command-parser",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "Offers basic parsing for messages received with discord.js",
   "main": "src/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Xzlash/discord-command-parser#readme",
   "dependencies": {
-    "discord.js": "github:hydrabolt/discord.js#master"
+    "discord.js-typings": "github:discordjs/discord.js-typings"
   },
   "types": "./typing.d.ts"
 }
