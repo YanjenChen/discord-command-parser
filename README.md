@@ -139,9 +139,9 @@ dcParser.ResultCode
   - `NO_BODY: 4`
 
       The message contained *only* the prefix, and nothing more.
-  - `WHITESPACE_AFTER_PREFIX: 5`
+  - `NO_APLHANUMERIC_AFTER_PREFIX: 5`
 
-      The message started with the prefix, but had whitespace immediately following it.
+      The message started with the prefix, but had a non-alphanumeric character immediately following it.
   - `UNKNOWN_ERROR: 6`
 
       An unknown error occurred while parsing the message, this is likely to be a bug with discord-command-parser, and should be reported to the [Issues page](https://github.com/Shinobu1337/discord-command-parser/issues) on GitHub.

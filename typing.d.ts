@@ -80,7 +80,7 @@ declare module 'discord-command-parser' {
      * SELF_MESSAGE: 2
      * NO_PREFIX_MATCH: 3
      * NO_BODY: 4
-     * WHITESPACE_AFTER_PREFIX: 5
+     * NO_APLHANUMERIC_AFTER_PREFIX: 5
      * UNKNOWN_ERROR: 6
      * ```
      */
@@ -155,9 +155,9 @@ declare module 'discord-command-parser' {
 
     /**
      * The message started with the prefix string, but had
-     * whitespace after it, which is not allowed.
+     * a non-alphanumeric character (not in range `a-z`, `A-Z`, or `0-9`) after it, which is not allowed.
      */
-    WHITESPACE_AFTER_PREFIX,
+    NO_APLHANUMERIC_AFTER_PREFIX,
 
     /**
      * An unknown error occurred while parsing the message,

@@ -2,7 +2,7 @@
 const RE_ARG_MATCHER = /"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|```((.|\s)*?)```|\S+/g;
 
 /** similar to `RE_ARG_MATCHER`, but only matches the command name */
-const RE_CMD_MATCHER = /^"[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|\S+/;
+const RE_CMD_MATCHER = /^[a-z0-9]+/gi;
 
 /** trims pairs of quotes from the start and end of a string */
 const RE_QUOTE_STRIP = /^"|"$|^'|'$|^```(\S*\n?)|```$/g;

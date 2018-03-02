@@ -11,8 +11,15 @@ const ResultCode = Object.freeze({
   SELF_MESSAGE: 2,
   NO_PREFIX_MATCH: 3,
   NO_BODY: 4,
-  WHITESPACE_AFTER_PREFIX: 5,
-  UNKNOWN_ERROR: 6
+  NO_APLHANUMERIC_AFTER_PREFIX: 5,
+  UNKNOWN_ERROR: 6,
+
+  get WHITESPACE_AFTER_PREFIX () {
+    // deprecation error
+    throw new Error
+      ('DeprecationError: Please use dcParser.ResultCode.NO_APLHANUMERIC_AFTER_PREFIX instead of WHITESPACE_AFTER_PREFIX');
+  }
+
 });
 
 function parse (message, prefix, options = {}) {
@@ -47,31 +54,41 @@ function parse (message, prefix, options = {}) {
     if (!remaining.length)
       return fail('no body to message, only a prefix', ResultCode.NO_BODY);
     
+    /*
+
     // make sure that the first character after the prefix is a non-whitespace character
     if (regexps.RE_STARTS_WITH_WHITESPACE.test(remaining))
       return fail('whitespace after prefix', ResultCode.WHITESPACE_AFTER_PREFIX);
     
-    let args = getArgs(remaining);
+    */
+
+    // https://github.com/Shinobu1337/discord-command-parser/issues/4
+
+    if (!regexps.RE_CMD_MATCHER.test(remaining))
+      return fail('non-alphanumeric character follows prefix', ResultCode.NO_APLHANUMERIC_AFTER_PREFIX);
+
     
     let result = new ParsedMessage();
     
+    // get command
+    result.command = remaining.match(regexps.RE_CMD_MATCHER)[0];
+    // remove command from remaining
+    remaining = remaining.slice(result.command.length).trim();
+
     result.success = true
     result.code = 'OK';
     result.prefix = prefix;
-    result.command = args.shift(); // the command is the first item in the array ^_^
-    result.arguments = args;
-    result.body = getBody(remaining);
+    result.arguments = getArgs(remaining);
+    result.body = remaining;
     result.message = message;
     
     return result;
-  } catch (e) {
-    return fail(e.stack, ResultCode.UNKNOWN_ERROR);
-  }
-}
 
-function getBody (str) {
-  // remove the command name
-  return str.replace(regexps.RE_CMD_MATCHER, '').trim();
+  } catch (e) {
+  
+    return fail(e.stack, ResultCode.UNKNOWN_ERROR);
+  
+  }
 }
 
 function getArgs (str) {
