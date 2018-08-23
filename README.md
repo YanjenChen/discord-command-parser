@@ -3,7 +3,7 @@ Parses commands from messages received with discord.js
 
 [![npm](https://img.shields.io/npm/dt/discord-command-parser.svg?style=for-the-badge)](https://npmjs.com/package/discord-command-parser)
 [![npm](https://img.shields.io/npm/v/discord-command-parser.svg?style=for-the-badge)](https://npmjs.com/package/discord-command-parser)
-[![discord](https://img.shields.io/badge/Discord-Join-blue.svg?style=for-the-badge)](https://discord.gg/epyQWQy)
+[![discord](https://img.shields.io/badge/Discord-Join-blue.svg?style=for-the-badge)](https://discord.gg/Urz6xqg)
 
 
 # Installation
