@@ -1,28 +1,27 @@
 {
-  "name": "discord-command-parser",
-  "version": "1.2.1",
-  "description": "Offers basic parsing for messages received with discord.js",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "discord",
-    "discord.js"
-  ],
-  "author": "Xzlash",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Xzlash/discord-command-parser.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Xzlash/discord-command-parser/issues"
-  },
-  "homepage": "https://github.com/Xzlash/discord-command-parser#readme",
-  "dependencies": {
-    "discord.js-typings": "github:discordjs/discord.js-typings"
-  },
-  "types": "./typing.d.ts",
-  "devDependencies": {}
+	"name": "discord-command-parser",
+	"version": "1.2.2",
+	"description": "Basic parsing for messages received with discord.js",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"discord",
+		"discord.js"
+	],
+	"author": {
+		"name": "Brenden Campbell",
+		"email": "campbellbrendene@gmail.com"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/campbellbrendene/discord-command-parser.git"
+	},
+	"bugs": {
+		"url": "https://github.com/campbellbrendene/discord-command-parser/issues"
+	},
+	"homepage": "https://github.com/campbellbrendene/discord-command-parser#readme",
+	"types": "./typing.d.ts"
 }

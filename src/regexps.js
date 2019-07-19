@@ -11,8 +11,8 @@ const RE_QUOTE_STRIP = /^"|"$|^'|'$|^```(\S*\n?)|```$/g;
 const RE_STARTS_WITH_WHITESPACE = /^\s/;
 
 module.exports = {
-  RE_ARG_MATCHER,
-  RE_CMD_MATCHER,
-  RE_QUOTE_STRIP,
-  RE_STARTS_WITH_WHITESPACE
-}
+	RE_ARG_MATCHER,
+	RE_CMD_MATCHER,
+	RE_QUOTE_STRIP,
+	RE_STARTS_WITH_WHITESPACE
+};
