@@ -1,5 +1,5 @@
 # discord-command-parser
-Basic parsing for messages received with discord.js
+Basic parsing for messages received with [Discord.js](https://github.com/discordjs/discord.js).
 
 [![npm](https://img.shields.io/npm/dt/discord-command-parser.svg?style=for-the-badge)](https://npmjs.com/package/discord-command-parser)
 [![npm](https://img.shields.io/npm/v/discord-command-parser.svg?style=for-the-badge)](https://npmjs.com/package/discord-command-parser)
