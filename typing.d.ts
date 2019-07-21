@@ -10,8 +10,7 @@ declare module 'discord-command-parser' {
 	 */
 	export function parse<MT = any> (
 		/**
-		 * An instance of Discord.js(master)#Message
-		 * that was received by a valid client.
+		 * A Discord.js `Message` object that was received by a bot.
 		 */
 		message: MT,
 
@@ -33,7 +32,7 @@ declare module 'discord-command-parser' {
 	 * You should check `.success` to tell if the message is
 	 * a valid command.
 	 */
-	export class ParsedMessage<MT> {
+	export class ParsedMessage<MT = any> {
 		/**
 		 * Whether the message passed all checks and appears to
 		 * be a well-formed command.
@@ -162,6 +161,6 @@ declare module 'discord-command-parser' {
 		 * this is likely to be a bug with discord-command-parser,
 		 * and should be reported to the Issues section on Github.
 		 */
-		UNKNOWN_ERROR
+		UNKNOWN_ERROR,
 	}
 }

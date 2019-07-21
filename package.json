@@ -23,5 +23,8 @@
 		"url": "https://github.com/campbellbrendene/discord-command-parser/issues"
 	},
 	"homepage": "https://github.com/campbellbrendene/discord-command-parser#readme",
-	"types": "./typing.d.ts"
+	"types": "./typing.d.ts",
+	"devDependencies": {
+		"chalk": "^2.4.2"
+	}
 }
