@@ -2,9 +2,18 @@
 // https://github.com/campbellbrendene/discord-command-parser
 // Licensed under the MIT license. See "LICENSE" in the root of this project.
 
-// TODO: Remove all regexps. Use procedural code instead to simplify.
-const regexps		=	require('./regexps');
-const ParsedMessage	=	require('./ParsedMessage');
+class ParsedMessage {
+	constructor () {
+		this.success	=	false;
+		this.prefix		=	'';
+		this.command	=	'';
+		this.arguments	=	[];
+		this.error		=	'';
+		this.code		=	'';
+		this.body		=	'';
+		this.message	=	null;
+	}
+}
 
 const ResultCode = Object.freeze({
 	OK:								0,
@@ -15,6 +24,39 @@ const ResultCode = Object.freeze({
 	NO_APLHANUMERIC_AFTER_PREFIX:	5,
 	UNKNOWN_ERROR:					6,
 });
+
+function _getCommandName(content) {
+	return content.split(/\s+/g)[0] || null;
+}
+
+function _getArguments(str) {
+	let args = [];
+	str = str.trim();
+
+	while (str.length) {
+		let arg;
+		if (str.startsWith('"') && str.indexOf('"', 1) > 0) {
+			arg = str.slice(1, str.indexOf('"', 1));
+			str = str.slice(str.indexOf('"', 1) + 1);
+		}
+		else if (str.startsWith("'") && str.indexOf("'", 1) > 0) {
+			arg = str.slice(1, str.indexOf("'", 1));
+			str = str.slice(str.indexOf("'", 1) + 1);
+		}
+		else if (str.startsWith('```') && str.indexOf('```', 3) > 0) {
+			arg = str.slice(3, str.indexOf('```', 3));
+			str = str.slice(str.indexOf('```', 3) + 3);
+		} else {
+			arg = str.split(/\s+/g)[0].trim();
+			str = str.slice(arg.length);
+		}
+		args.push(arg.trim());
+		str = str.trim();
+	}
+	
+	return args;
+}
+
 
 function parse(message, prefix, options = {}) {
 	function fail(error, code) {
@@ -65,20 +107,11 @@ function parse(message, prefix, options = {}) {
 	parsed.success		= true;
 	parsed.code			= ResultCode.OK;
 	parsed.prefix		= matchedPrefix;
-	parsed.arguments	= getArgs(remaining);
+	parsed.arguments	= _getArguments(remaining);
 	parsed.body			= remaining;
 	parsed.message		= message;
 
 	return parsed;
-}
-
-function getArgs(str) {
-	if (!str.trim().length) return [];
-	// get the arguments using the magic regex
-	let splitted = str.match(regexps.RE_ARG_MATCHER);
-	
-	// map it to remove the quotes (if any)
-	return splitted.map(v => v.replace(regexps.RE_QUOTE_STRIP, ''));
 }
 
 // For typings
