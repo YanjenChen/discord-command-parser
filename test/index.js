@@ -34,8 +34,14 @@ const tests = {
 	'Doublequote args':		parse(new Message('!say "hello world"'), '!').arguments.join(',') == 'hello world',
 	'Singlequote args':		parse(new Message("!say 'hello world'"), '!').arguments.join(',') == 'hello world',
 	'Codeblock args':		parse(new Message('!say ```\nhello world```'), '!').arguments.join(',') == 'hello world',
-	// TODO (Urgent): Add backquote arguments
+	'Success prefix[0]':	parse(new Message('!ping'), ['!', '?']).success == true,
+	'Match prefix[0]':		parse(new Message('!ping'), ['!', '?']).prefix == '!',
+	'Success prefix[1]':	parse(new Message('?ping'), ['!', '?']).success == true,
+	'Match prefix[1]':		parse(new Message('?ping'), ['!', '?']).prefix == '?',
+	'No match on []':		parse(new Message('!ping'), []).success == false,
+	'No match on [...]':	parse(new Message('!ping'), ['!!', '!!!']).success == false,
 	// 'Backquote args':		parse(new Message('!say `hello world`'), '!').arguments.join(',') == 'hello world',
+	// wontfix
 };
 
 let passed_sum = 0;

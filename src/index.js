@@ -19,43 +19,55 @@ const ResultCode = Object.freeze({
 function parse(message, prefix, options = {}) {
 	function fail(error, code) {
 		const result = new ParsedMessage();
-		result.success = false;
-		result.message = message;
-		result.prefix = prefix;
-		result.error = error;
-		result.code = code;
+		result.success	= false;
+		result.message	= message;
+		result.prefix	= prefix;
+		result.error	= error;
+		result.code		= code;
 		return result;
 	}
 
-	if (message.author.bot && !options.allowBots) {
+	if (typeof prefix === 'string')
+		prefix = [prefix];
+	else
+		prefix = [...prefix];
+
+	if (message.author.bot && !options.allowBots)
 		return fail('Message sent by a bot account.', ResultCode.BOT_USER);
-	} else if (message.author.id === message.client.user.id && !options.allowSelf) {
+	if (message.author.id === message.client.user.id && !options.allowSelf)
 		return fail('Message sent from client\'s account.', ResultCode.SELF_MESSAGE);
-	} else if (message.content.length  === 0) {
+	if (message.content.length  === 0)
 		return fail('Empty message body.', ResultCode.NO_BODY);
-	} else if (!message.content.startsWith(prefix)) {
+
+	let matchedPrefix = null;
+	for (let p of prefix) {
+		if (message.content.startsWith(p)) {
+			matchedPrefix = p;
+			break;
+		}
+	}
+	
+	if (!matchedPrefix)
 		return fail('Message does not start with prefix.', ResultCode.NO_PREFIX_MATCH);
-	}
 
-	let remaining = message.content.slice(prefix.length);
+	let remaining = message.content.slice(matchedPrefix.length);
 
-	if (remaining.length === 0) {
+	if (remaining.length === 0)
 		return fail('No body after prefix.', ResultCode.NO_BODY);
-	} else if (!/[a-z0-9]/i.test(remaining[0])) {
+	if (!/[a-z0-9]/i.test(remaining[0]))
 		return fail('Non alphanumeric character follows prefix.', ResultCode.NO_APLHANUMERIC_AFTER_PREFIX);
-	}
 
 	const parsed = new ParsedMessage();
 
-	parsed.command = remaining.match(/^[a-z0-9\-_\.]+/i)[0];
-	remaining = remaining.slice(parsed.command.length).trim();
+	parsed.command	= remaining.match(/^[a-z0-9\-_\.]+/i)[0];
+	remaining		= remaining.slice(parsed.command.length).trim();
 
-	parsed.success = true;
-	parsed.code = ResultCode.OK;
-	parsed.prefix = prefix;
-	parsed.arguments = getArgs(remaining);
-	parsed.body = remaining;
-	parsed.message = message;
+	parsed.success		= true;
+	parsed.code			= ResultCode.OK;
+	parsed.prefix		= matchedPrefix;
+	parsed.arguments	= getArgs(remaining);
+	parsed.body			= remaining;
+	parsed.message		= message;
 
 	return parsed;
 }

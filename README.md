@@ -38,7 +38,7 @@ client.login('Token').then(() => console.log('Ready!'));
 ## `parse(message, prefix, [options])`
 > Returns a `ParsedMessage`.
 -   `message`   ***Message***; the Discord.js Message to parse.
--   `prefix`    ***string***; the prefix to check for in commands.
+-   `prefix`    ***string | string[]***; the prefix(es) to check for in commands.
 -   `options`   ***object, optional***; additional configuration.
     -   `options.allowBots` ***boolean***; whether to parse messages sent by bot accounts (`message.author.bot`).
     -   `options.allowSelf` ***boolean***; whether to parse messages sent by the client account.
@@ -51,7 +51,7 @@ Used internally and returned by `parse`.
 - `success`: ***boolean***
     > Whether the message could be parsed and appears to be a valid command.
 - `prefix`: ***string***
-    > This is redundant to the prefix that was provided to `parse`.
+    > The prefix that matched. Useful when providing an array of prefixes to `parse`.
 - `command`: ***string***
     > The command that was parsed from the message. For example, the message `!ping` would have a `command` value of `ping`.
 - `arguments`: ***string[]***

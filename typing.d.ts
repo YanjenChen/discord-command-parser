@@ -15,10 +15,10 @@ declare module 'discord-command-parser' {
 		message: MT,
 
 		/**
-		 * A prefix string to check that a "command message"
+		 * A prefix string (or an array of strings) to check that a command message
 		 * starts with.
 		 */
-		prefix: string,
+		prefix: string | string[],
 
 		/**
 		 * Optional flags for the parser.
