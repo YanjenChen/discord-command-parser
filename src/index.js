@@ -53,7 +53,7 @@ function _getArguments(str) {
 		args.push(arg.trim());
 		str = str.trim();
 	}
-	
+
 	return args;
 }
 
@@ -88,7 +88,7 @@ function parse(message, prefix, options = {}) {
 			break;
 		}
 	}
-	
+
 	if (!matchedPrefix)
 		return fail('Message does not start with prefix.', ResultCode.NO_PREFIX_MATCH);
 
@@ -96,12 +96,13 @@ function parse(message, prefix, options = {}) {
 
 	if (remaining.length === 0)
 		return fail('No body after prefix.', ResultCode.NO_BODY);
-	if (!/[a-z0-9]/i.test(remaining[0]))
+	if (/[ \t\n]/i.test(remaining[0]))
 		return fail('Non alphanumeric character follows prefix.', ResultCode.NO_APLHANUMERIC_AFTER_PREFIX);
 
 	const parsed = new ParsedMessage();
 
-	parsed.command	= remaining.match(/^[a-z0-9\-_\.]+/i)[0];
+	// parsed.command	= remaining.match(/^[a-z0-9\-_\.]+/i)[0];
+  parsed.command = remaining.split(' ')[0];
 	remaining		= remaining.slice(parsed.command.length).trim();
 
 	parsed.success		= true;
